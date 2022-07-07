@@ -1,0 +1,79 @@
+$breakpoint-super-small: 320px;
+$breakpoint-small: 767px;
+$breakpoint-medium: 768px;
+$breakpoint-large: 1024px;
+
+@function z-index($key) {
+  @return map-get($z-index, $key);
+}
+
+@mixin z-index($key) {
+  z-index: z-index($key);
+}
+
+$z-index: ();
+
+@mixin box-shadow {
+  box-shadow: 0 0 7px 0 hsla(210,1%,40%,.3);
+}
+
+@mixin absolute-centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin fixed-centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-backface-visibility: hidden;
+  transform: translate(-50%, -50%) translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+@mixin ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin show {
+  opacity: 1;
+  visibility: visible;
+}
+
+@mixin hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@mixin force-show {
+  display: block !important;
+}
+
+@mixin force-hide {
+  display: none !important;
+}
+
+
+@mixin breakpoint($breakpoint) {
+  @if $breakpoint == spm {
+      @media (max-width: $breakpoint-super-small) { @content; }
+  }
+  @else if $breakpoint == sm {
+    @media (max-width: $breakpoint-small) { @content; }
+  }
+ 
+  @else if $breakpoint == md {
+    @media (min-width: $breakpoint-medium) { @content; }
+  }
+ 
+  @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-large) { @content; }
+  }
+  @else {
+    @warn "The breakpoint mixin only supports 'spm', sm', 'md' and 'lg'";
+  }
+}
